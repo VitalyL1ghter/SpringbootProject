@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.innopolis.pizzeria.Utils.UtilsJson.asJsonString;
+import static ru.innopolis.pizzeria.utils.UtilsJson.asJsonString;
 
 @DisplayName(value = "OrderPizza Controller test")
 @WebMvcTest(OrderPizzaController.class)
@@ -38,9 +38,6 @@ class OrderPizzaControllerTest {
 
     private final List<OrderPizzaAllDto> ordersNew = new ArrayList<>();
 
-    private final List<CustomerDto> customers = new ArrayList<>();
-
-    private final List<PizzaDto> pizzas = new ArrayList<>();
 
     @BeforeEach
     public void init() {
@@ -59,8 +56,6 @@ class OrderPizzaControllerTest {
                 .costPizza(600)
                 .build();
 
-        pizzas.add(firstPizza);
-        pizzas.add(secondPizza);
 
         CustomerDto
                 firstCustomer = new CustomerDto();
@@ -84,20 +79,19 @@ class OrderPizzaControllerTest {
         secondCustomer.setCity("Казань");
         secondCustomer.setStreet("Мавлютова");
         secondCustomer.setNumberHouseAndApartment("20/20");
-        customers.add(firstCustomer);
-        customers.add(secondCustomer);
+
 
         OrderPizzaDto firstOrderPizza = OrderPizzaDto.builder()
                 .orderPizzaId(1L)
-                .customerId(10L)
-                .pizzaId(20L)
+                .customerId(firstCustomer.getCustomerId())
+                .pizzaId(firstPizza.getPizzaId())
                 .amount(1)
                 .build();
 
         OrderPizzaDto secondOrderPizza = OrderPizzaDto.builder()
                 .orderPizzaId(2L)
-                .customerId(30L)
-                .pizzaId(40L)
+                .customerId(secondCustomer.getCustomerId())
+                .pizzaId(secondPizza.getPizzaId())
                 .amount(2)
                 .build();
         orders.add(firstOrderPizza);
@@ -115,8 +109,6 @@ class OrderPizzaControllerTest {
 
     @AfterEach
     public void tearDown() {
-        pizzas.clear();
-        customers.clear();
         orders.clear();
     }
 
@@ -159,8 +151,8 @@ class OrderPizzaControllerTest {
         mockMvc.perform(get("/orders/findById/{order-id}", 1L))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$.orderPizzaId").value(1L))
-                .andExpect(jsonPath("$.customerId").value(10L))
-                .andExpect(jsonPath("$.pizzaId").value(20L))
+                .andExpect(jsonPath("$.customerId").value(20L))
+                .andExpect(jsonPath("$.pizzaId").value(10L))
                 .andExpect(jsonPath("$.amount").value(1));
 
 
