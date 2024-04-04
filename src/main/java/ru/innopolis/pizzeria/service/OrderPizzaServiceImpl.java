@@ -6,13 +6,13 @@ import org.springframework.stereotype.Service;
 import ru.innopolis.pizzeria.dto.CustomerDto;
 import ru.innopolis.pizzeria.dto.OrderPizzaAllDto;
 import ru.innopolis.pizzeria.dto.OrderPizzaDto;
+import ru.innopolis.pizzeria.exception.NotFoundException;
 import ru.innopolis.pizzeria.model.OrderPizza;
 import ru.innopolis.pizzeria.model.Pizza;
 import ru.innopolis.pizzeria.repository.CustomerRepository;
 import ru.innopolis.pizzeria.repository.OrderPizzaRepository;
 import ru.innopolis.pizzeria.repository.PizzaRepository;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,12 +42,12 @@ public class OrderPizzaServiceImpl implements OrderPizzaService {
 
     @Override
     public OrderPizzaDto getOrderPizzaById(Long id) {
-        return from(orderPizzaRepository.findById(id).orElseThrow(RuntimeException::new));
+        return from(orderPizzaRepository.findById(id).orElseThrow(NotFoundException::new));
     }
 
     @Override
     public OrderPizzaDto addOrderPizza(OrderPizzaDto orderPizza) {
-        Pizza pizza = pizzaRepository.findById(orderPizza.getPizzaId()).orElseThrow(RuntimeException::new);
+        Pizza pizza = pizzaRepository.findById(orderPizza.getPizzaId()).orElseThrow(NotFoundException::new);
         return from(orderPizzaRepository.save(OrderPizza.builder()
                 .orderPizzaId(orderPizza.getOrderPizzaId())
                 .pizza(pizza)

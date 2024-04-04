@@ -1,9 +1,11 @@
 package ru.innopolis.pizzeria.service;
+
 import org.springframework.stereotype.Service;
 import ru.innopolis.pizzeria.dto.CustomerDto;
+
 import java.util.List;
 
-@Service
+
 
 public interface CustomerService {
 

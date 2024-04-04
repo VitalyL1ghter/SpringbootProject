@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import static ru.innopolis.pizzeria.Utils.UtilsJson.asJsonString;
+import static ru.innopolis.pizzeria.utils.UtilsJson.asJsonString;
 
 
 @DisplayName(value = "Customer Controller test")
