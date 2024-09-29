@@ -2,6 +2,7 @@ package ru.innopolis.pizzeria.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.innopolis.pizzeria.dto.PizzaDto;
+import ru.innopolis.pizzeria.exception.NotFoundException;
 import ru.innopolis.pizzeria.model.Pizza;
 import ru.innopolis.pizzeria.repository.PizzaRepository;
 import java.util.List;
@@ -21,7 +22,7 @@ public class PizzaServiceImpl implements PizzaService {
 
     @Override
     public PizzaDto getPizzaById(Long id) {
-        return from(pizzaRepository.findById(id).orElseThrow(RuntimeException::new));
+        return from(pizzaRepository.findById(id).orElseThrow(NotFoundException::new));
     }
 
 

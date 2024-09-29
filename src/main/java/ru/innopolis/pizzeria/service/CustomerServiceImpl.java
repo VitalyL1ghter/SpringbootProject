@@ -6,6 +6,8 @@ import ru.innopolis.pizzeria.model.Customer;
 import ru.innopolis.pizzeria.repository.CustomerRepository;
 import java.util.List;
 import static ru.innopolis.pizzeria.dto.CustomerDto.from;
+import ru.innopolis.pizzeria.exception.NotFoundException;
+
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +22,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
     @Override
     public CustomerDto getCustomerById(Long id) {
-        return from(customerRepository.findById(id).orElseThrow(RuntimeException::new));
+        return from(customerRepository.findById(id).orElseThrow(NotFoundException::new));
     }
     @Override
     public CustomerDto updateCustomer(Long id, CustomerDto customer) {
@@ -59,7 +61,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void softDeleteCustomerById(Long id) {
-        Customer customer = customerRepository.findById(id).orElseThrow(RuntimeException::new);
+        Customer customer = customerRepository.findById(id).orElseThrow(NotFoundException::new);
         customer.setSoftDeletedFlag(true);
         customerRepository.save(customer);
     }

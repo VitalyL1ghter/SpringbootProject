@@ -1,4 +1,4 @@
-package ru.innopolis.pizzeria.Utils;
+package ru.innopolis.pizzeria.utils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class UtilsJson {
